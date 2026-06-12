@@ -62,8 +62,10 @@ config NICE_VIEW_GEM_ANIMATION_FRAME
     default 0
     help
       When NICE_VIEW_GEM_ANIMATION is disabled, a single static crystal frame is
-      drawn. 0 picks a random frame at boot; 1-16 pins a specific frame. Values
-      above 16 wrap around.
+      drawn. 0 picks a random frame at boot; 1-16 pin one of the original
+      crystals. 17-25 pin the custom art frames: 17 heart, 18 shaded orb,
+      19 iso cube, 20 saturn, 21 moon, 22 gem, 23 lightning bolt,
+      24 space invader, 25 skull. Values above the last frame wrap around.
 
 config NICE_VIEW_GEM_ANIMATION_MS
     int "Animation length in milliseconds"

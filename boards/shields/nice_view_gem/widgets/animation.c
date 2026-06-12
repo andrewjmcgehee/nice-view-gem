@@ -18,11 +18,26 @@ LV_IMG_DECLARE(crystal_13);
 LV_IMG_DECLARE(crystal_14);
 LV_IMG_DECLARE(crystal_15);
 LV_IMG_DECLARE(crystal_16);
+/* Custom static art added alongside the originals. The animation loop only
+ * cycles the first 16 crystals (see lv_animimg_set_src below); these extra
+ * frames exist to be pinned via CONFIG_NICE_VIEW_GEM_ANIMATION_FRAME. */
+LV_IMG_DECLARE(crystal_17); /* heart        */
+LV_IMG_DECLARE(crystal_18); /* shaded orb   */
+LV_IMG_DECLARE(crystal_19); /* iso cube     */
+LV_IMG_DECLARE(crystal_20); /* saturn       */
+LV_IMG_DECLARE(crystal_21); /* moon         */
+LV_IMG_DECLARE(crystal_22); /* gem          */
+LV_IMG_DECLARE(crystal_23); /* bolt         */
+LV_IMG_DECLARE(crystal_24); /* space invader */
+LV_IMG_DECLARE(crystal_25); /* skull        */
 
 const lv_img_dsc_t *anim_imgs[] = {
     &crystal_01, &crystal_02, &crystal_03, &crystal_04, &crystal_05, &crystal_06,
     &crystal_07, &crystal_08, &crystal_09, &crystal_10, &crystal_11, &crystal_12,
     &crystal_13, &crystal_14, &crystal_15, &crystal_16,
+    /* extra static-only frames, selectable as frame 17..25 */
+    &crystal_17, &crystal_18, &crystal_19, &crystal_20, &crystal_21,
+    &crystal_22, &crystal_23, &crystal_24, &crystal_25,
 };
 
 void draw_animation(lv_obj_t *canvas) {
