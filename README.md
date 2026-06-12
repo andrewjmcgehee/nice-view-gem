@@ -1,4 +1,4 @@
-# corne-gem
+# nice-view-gem
 
 ![Preview](https://github.com/m165437/nice-view-gem/blob/main/.github/assets/preview.jpg?raw=true)
 
@@ -27,15 +27,15 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: m165437 #new entry
-      url-base: https://github.com/M165437 #new entry
+    - name: andrewjmcgehee #new entry
+      url-base: https://github.com/andrewjmcgehee #new entry
   projects:
     - name: zmk
       remote: zmkfirmware
       revision: main
       import: app/west.yml
     - name: nice-view-gem #new entry
-      remote: m165437 #new entry
+      remote: andrewjmcgehee #new entry
       revision: main #new entry
   self:
     path: config
