@@ -1,0 +1,85 @@
+if SHIELD_NICE_VIEW_GEM
+
+config LV_Z_VDB_SIZE
+    default 100
+
+config LV_DPI_DEF
+    default 161
+
+config LV_Z_BITS_PER_PIXEL
+    default 1
+
+choice LV_COLOR_DEPTH
+    default LV_COLOR_DEPTH_1
+endchoice
+
+choice ZMK_DISPLAY_WORK_QUEUE
+    default ZMK_DISPLAY_WORK_QUEUE_DEDICATED
+endchoice
+
+choice ZMK_DISPLAY_STATUS_SCREEN
+    default ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+endchoice
+
+config LV_Z_MEM_POOL_SIZE
+    default 8192 if ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+
+config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    imply NICE_VIEW_WIDGET_STATUS
+
+config NICE_VIEW_GEM_WPM_FIXED_RANGE
+    bool "Enable fixed range for WPM gauge/chart"
+    default y
+
+config NICE_VIEW_GEM_WPM_FIXED_RANGE_MAX
+    int "Fixed range maximum for WPM gauge/chart"
+    default 100
+
+config NICE_VIEW_GEM_WPM_REDRAW_THRESHOLD
+    int "Minimum WPM change required to redraw the gauge/chart"
+    default 5
+    help
+      Battery saving knob. The WPM gauge/chart redraws the whole middle canvas
+      (render + software rotation + SPI flush) on every WPM update, which fire
+      constantly while typing. Only redraw when the value moves by at least this
+      many WPM (a transition to 0 always redraws so the gauge resets). Set to 0
+      to redraw on every update like the original behavior.
+
+config NICE_VIEW_GEM_WPM_SHOW_GAUGE
+    bool "Show the WPM gauge (arc + needle)"
+    default y
+    help
+      When disabled, only the WPM chart (grid, graph and label) is drawn and the
+      circular gauge with its moving needle is hidden. Hiding the gauge also
+      skips the per-redraw needle trig, a small additional battery saving.
+
+config NICE_VIEW_GEM_ANIMATION
+    bool "Enable animation on peripheral"
+    default y
+
+config NICE_VIEW_GEM_ANIMATION_FRAME
+    int "Frame index (out of 16) to use if animation is disabled"
+    default 0
+
+config NICE_VIEW_GEM_ANIMATION_MS
+    int "Animation length in milliseconds"
+    default 960
+
+config NICE_VIEW_WIDGET_STATUS
+    select LV_USE_LABEL
+    select LV_USE_IMAGE
+    select LV_USE_CANVAS
+    select LV_USE_ANIMIMG
+    select LV_USE_ANIMATION
+
+config NICE_VIEW_WIDGET_INVERTED
+    bool "Invert display colors"
+
+if !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+
+config NICE_VIEW_WIDGET_STATUS
+    select ZMK_WPM
+
+endif # !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+
+endif # SHIELD_NICE_VIEW_GEM
