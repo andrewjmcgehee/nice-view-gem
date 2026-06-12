@@ -1,4 +1,4 @@
-# nice-view-gem
+# corne-gem
 
 ![Preview](https://github.com/m165437/nice-view-gem/blob/main/.github/assets/preview.jpg?raw=true)
 
