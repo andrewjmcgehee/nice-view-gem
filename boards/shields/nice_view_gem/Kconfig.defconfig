@@ -57,6 +57,14 @@ config NICE_VIEW_GEM_ANIMATION
     bool "Enable animation on peripheral"
     default y
 
+config NICE_VIEW_GEM_ANIMATION_FRAME
+    int "Static frame to show when animation is disabled"
+    default 0
+    help
+      When NICE_VIEW_GEM_ANIMATION is disabled, a single static crystal frame is
+      drawn. 0 picks a random frame at boot; 1-16 pins a specific frame. Values
+      above 16 wrap around.
+
 config NICE_VIEW_GEM_ANIMATION_MS
     int "Animation length in milliseconds"
     default 960
