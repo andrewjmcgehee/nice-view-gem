@@ -33,7 +33,25 @@ config NICE_VIEW_GEM_WPM_FIXED_RANGE
 
 config NICE_VIEW_GEM_WPM_FIXED_RANGE_MAX
     int "Fixed range maximum for WPM gauge/chart"
-    default 100
+    default 120
+
+config NICE_VIEW_GEM_WPM_REDRAW_THRESHOLD
+    int "Minimum WPM change required to redraw the gauge/chart"
+    default 5
+    help
+      Battery saving knob. The WPM gauge/chart redraws the whole middle canvas
+      (render + software rotation + SPI flush) on every WPM update, which fire
+      constantly while typing. Only redraw when the value moves by at least this
+      many WPM (a transition to 0 always redraws so the gauge resets). Set to 0
+      to redraw on every update like the original behavior.
+
+config NICE_VIEW_GEM_WPM_SHOW_GAUGE
+    bool "Show the WPM gauge (arc + needle)"
+    default y
+    help
+      When disabled, only the WPM chart (grid, graph and label) is drawn and the
+      circular gauge with its moving needle is hidden. Hiding the gauge also
+      skips the per-redraw needle trig, a small additional battery saving.
 
 config NICE_VIEW_GEM_ANIMATION
     bool "Enable animation on peripheral"

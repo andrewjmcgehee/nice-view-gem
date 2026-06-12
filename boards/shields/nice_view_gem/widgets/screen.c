@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <zephyr/kernel.h>
 
 #include <zephyr/logging/log.h>
@@ -180,7 +181,18 @@ static void set_wpm_status(struct zmk_widget_screen *widget, struct wpm_status_s
     }
     widget->state.wpm[9] = state.wpm;
 
-    draw_middle(widget->obj, widget->cbuf2, &widget->state);
+    // Battery saving: redrawing the middle canvas (render + software rotation +
+    // SPI flush) is relatively expensive and WPM updates fire constantly while
+    // typing. Only redraw when the value moved by at least the configured
+    // threshold, and always redraw when it returns to zero so the gauge resets.
+    // When the keyboard is idle (WPM steady at 0) this skips redraws entirely.
+    static int last_drawn_wpm = -1;
+    int wpm = state.wpm;
+    if (last_drawn_wpm < 0 || (wpm == 0 && last_drawn_wpm != 0) ||
+        abs(wpm - last_drawn_wpm) >= CONFIG_NICE_VIEW_GEM_WPM_REDRAW_THRESHOLD) {
+        last_drawn_wpm = wpm;
+        draw_middle(widget->obj, widget->cbuf2, &widget->state);
+    }
 }
 
 static void wpm_status_update_cb(struct wpm_status_state state) {
